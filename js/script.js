@@ -27,28 +27,25 @@ const movieDB = {
     ]
 };
 
-const adBlock = document.getElementsByClassName('promo__adv'),
-      adImages = adBlock[0].getElementsByTagName('img'),
-      genre = document.getElementsByClassName('promo__genre')[0],
-      promoBg = document.querySelectorAll('.promo__bg')[0],
-      listMovies = document.querySelectorAll('.promo__interactive-list')[0],
-      moviesItem = document.querySelectorAll('.promo__interactive-item');
+const adImages = document.querySelectorAll('.promo__adv img'),
+      poster = document.querySelector('.promo__bg'),
+      genre = poster.querySelector('.promo__genre'),
+      movieList = document.querySelector('.promo__interactive-list'),
+      movieItems = document.querySelectorAll('.promo__interactive-item');
 
-const numElement = adImages.length;
-for (let i = 0; i < numElement; i++) {
-    adImages[0].remove();
-}
-
-genre.textContent = 'драма';
-promoBg.style.background = 'url("../img/bg.jpg") center center/cover no-repeat';
-
-moviesItem.forEach(item => {
+adImages.forEach(item => {
     item.remove();
 });
 
-const movies = movieDB.movies.sort();
+genre.textContent = 'драма';
+poster.style.backgroundImage = 'url("../img/bg.jpg")';
 
-for (let i = 0; i < movies.length; i++) {
-    listMovies.insertAdjacentHTML("beforeend", 
-    `<li class="promo__interactive-item">${i + 1} ${movies[i]}<div class="delete"></div></li>`);
-}
+movieList.innerHTML = '';
+movieDB.movies.sort();
+
+movieDB.movies.forEach( (film, i) => {
+    movieList.innerHTML += 
+    `<li class="promo__interactive-item">${i + 1} ${film}
+        <div class="delete"></div>
+    </li>`;
+});
